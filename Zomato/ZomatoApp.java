@@ -20,10 +20,7 @@ public class ZomatoApp {
         restaurant1.addMenuItem(new MenuItem("P1", "Chole Bhature", 120));
         restaurant1.addMenuItem(new MenuItem("P2", "Samosa", 15));
 
-        Restaurant restaurant2 = new Restaurant("Haldiram", "Kolkata");
-        restaurant2.addMenuItem(new MenuItem("P1", "Raj Kachori", 80));
-        restaurant2.addMenuItem(new MenuItem("P2", "Pav Bhaji", 100));
-        restaurant2.addMenuItem(new MenuItem("P3", "Dhokla", 50));
+    
 
         Restaurant restaurant3 = new Restaurant("Saravana Bhavan", "Chennai");
         restaurant3.addMenuItem(new MenuItem("P1", "Masala Dosa", 90));
