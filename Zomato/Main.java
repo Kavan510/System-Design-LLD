@@ -1,44 +1,51 @@
 package Zomato;
 
-import javax.sound.sampled.SourceDataLine;
-import javax.swing.event.SwingPropertyChangeSupport;
-
-import Zomato.models.Order;
-import Zomato.models.User;
+import Zomato.models.*;
 import Zomato.strategies.*;
-import Zomato.models.Restaurant;
-import Zomato.models.*;
 import java.util.*;
-import Zomato.models.*;
 
 public class Main {
 
     public static void main(String[] args) {
+
+        // Single instance (IMPORTANT FIX)
         ZomatoApp zomato = new ZomatoApp();
 
+        // Create user
         User user = new User("Kavan", "Bvn", 101);
-        System.out.println("User with user id " + user.getName() + " is active\n");
-        java.util.List<Restaurant> restaurantList = zomato.searchRestaurants("Delhi");
+        System.out.println("User with userName " + user.getName() + " is active\n");
+
+        // Search restaurants
+        List<Restaurant> restaurantList = zomato.searchRestaurants("Delhi");
 
         if (restaurantList.isEmpty()) {
             System.out.println("No restaurant found!!");
             return;
         }
+
         System.out.println("Found restaurant\n");
 
         for (Restaurant restaurant : restaurantList) {
             System.out.println(" - " + restaurant.getName());
         }
 
-        zomato.selectRestaurant(user, restaurantList.get(0));
+        // Select restaurant
+        Restaurant selectedRestaurant = restaurantList.get(0);
+        zomato.selectRestaurant(user, selectedRestaurant);
 
-        System.out.println("Selected Restaurant:" + restaurantList.get(0).getName());
+        System.out.println("Selected Restaurant: " + selectedRestaurant.getName());
+
+        // Add items to cart
         zomato.addToCart(user, "P1");
         zomato.addToCart(user, "P2");
+
+        // Print cart
         zomato.printUserCart(user);
+
+        // Checkout
         Order order = zomato.checkoutNow(user, "Delivery", new UpiPaymentStrategy("1234567890"));
 
+        // Pay
         zomato.payForOrder(user, order);
-
     }
 }

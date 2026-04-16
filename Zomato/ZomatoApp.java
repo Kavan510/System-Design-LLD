@@ -3,7 +3,6 @@ package Zomato;
 import java.util.List;
 import Zomato.models.*;
 import java.util.*;
-
 import Zomato.factories.*;
 import Zomato.managers.*;
 import Zomato.managers.RestaurantManager;
@@ -52,12 +51,19 @@ public class ZomatoApp {
             System.out.println("Please select a restaurant first.");
             return;
         }
-        for (MenuItem item : restaurant.getMenu()) {
-            if (item.getCode().equals(itemCode)) {
-                user.getCart().addItem(item);
-                break;
-            }
-        }
+        System.out.println("Looking for item: " + itemCode);
+
+for (MenuItem item : restaurant.getMenu()) {
+    System.out.println("Checking item: " + item.getCode());
+
+    if (item.getCode().equals(itemCode)) {
+        System.out.println("Item FOUND → adding to cart");
+        user.getCart().addItem(item);
+        return;
+    }
+}
+
+System.out.println("Item NOT FOUND");
     }
 
     public Order checkoutNow(User user, String orderType, PaymentStrategy paymentStrategy) {
@@ -84,6 +90,10 @@ public class ZomatoApp {
     }
 
     public void payForOrder(User user, Order order) {
+        if (order == null) {
+    System.out.println("Order not created. Cart might be empty.");
+    return;
+}
         boolean isPaymentSuccess = order.processPayment();
 
         if (isPaymentSuccess) {
